@@ -195,3 +195,5 @@ cython_debug/
 
 client_secret.json
 token.json
+test.py
+data/
