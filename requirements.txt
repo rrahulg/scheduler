@@ -3,13 +3,11 @@ google-auth-httplib2
 google-auth-oauthlib
 phidata
 google-generativeai
+google-genai
 sqlalchemy
 streamlit
 SpeechRecognition 
-gtts
-gTTS
 streamlit
 pywin32
-text-to-speech
 mutagen
 -e .

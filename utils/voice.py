@@ -1,20 +1,43 @@
-import base64
-import os
+import wave
 
-from text_to_speech import save
+from dotenv import load_dotenv
+from google import genai
+from google.genai import types
+
+load_dotenv()
 
 
-def play_audio(text):
-    path = os.path.join(os.getcwd(), "data/output.mp3")
-    save(text, lang="en", file=path)
+def wave_file(pcm, filename="data/output.wav", channels=1, rate=24000, sample_width=2):
+    with wave.open(filename, "wb") as wf:
+        wf.setnchannels(channels)
+        wf.setsampwidth(sample_width)
+        wf.setframerate(rate)
+        wf.writeframes(pcm)
 
-    with open(path, "rb") as f:
-        data = f.read()
-    b64 = base64.b64encode(data).decode("utf-8")
 
-    md = f"""
-        <audio autoplay>
-            <source src="data:audio/mp3;base64,{b64}" type="audio/mp3">
-        </audio>
-    """
-    return md
+client = genai.Client(api_key="AIzaSyB76_e0Roy5UPSLARsgHDRyMSFBOdmSjB4")
+
+
+def save(text, client=client):
+    response = client.models.generate_content(
+        model="gemini-2.5-flash-preview-tts",
+        contents=text,
+        config=types.GenerateContentConfig(
+            response_modalities=["AUDIO"],
+            speech_config=types.SpeechConfig(
+                voice_config=types.VoiceConfig(
+                    prebuilt_voice_config=types.PrebuiltVoiceConfig(
+                        voice_name="Kore",
+                    )
+                )
+            ),
+        ),
+    )
+    candidate = response.candidates[0]
+    if not candidate.content or not candidate.content.parts:
+        raise ValueError(
+            "Model did not return audio. Check API key access and model support."
+        )
+
+    data = candidate.content.parts[0].inline_data.data
+    wave_file(data)
