@@ -7,7 +7,6 @@ from phi.storage.agent.sqlite import SqlAgentStorage
 from datetime import datetime, timedelta,timezone
 from src.tools import CalendarToolkit
 from utils.google_apis import get_google_calendar_service
-from utils.logger import CustomException, logging
 
 load_dotenv()
 

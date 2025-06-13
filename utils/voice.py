@@ -15,7 +15,7 @@ def wave_file(pcm, filename="data/output.wav", channels=1, rate=24000, sample_wi
         wf.writeframes(pcm)
 
 
-client = genai.Client(api_key="AIzaSyB76_e0Roy5UPSLARsgHDRyMSFBOdmSjB4")
+client = genai.Client()
 
 
 def save(text, client=client):

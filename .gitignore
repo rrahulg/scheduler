@@ -193,6 +193,7 @@ cython_debug/
 .cursorignore
 .cursorindexingignore
 
+#custom
 client_secret.json
 token.json
 test.py

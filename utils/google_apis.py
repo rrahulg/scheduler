@@ -13,9 +13,9 @@ def get_google_calendar_service(client_secrets_file, token_file, SCOPES):
     """Builds and returns an authenticated Google Calendar API service.
 
     Args:
-        client_secrets_file (_type_): Path to the client secret JSON file.
-        token_file (_type_): Path to the token JSON file.
-        SCOPES (_type_): List of scopes for Google Calendar API access.
+        client_secrets_file (str): Path to the client secret JSON file.
+        token_file (str): Path to the token JSON file.
+        SCOPES (List[str]): List of scopes for Google Calendar API access.
 
     Returns:
         _type_: Authorized Google Calendar service instance.

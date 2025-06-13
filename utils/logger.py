@@ -40,6 +40,3 @@ logging.basicConfig(
     level=logging.INFO,
 )
 
-# logging.info("This is an info message.")
-# logging.warning("This is a warning.")
-# logging.debug("Debugging value: x=42")

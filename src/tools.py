@@ -1,6 +1,5 @@
 import sys
 from datetime import datetime, timedelta, timezone
-from typing import Any
 
 from phi.tools import Toolkit
 
