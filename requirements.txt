@@ -5,4 +5,11 @@ phidata
 google-generativeai
 sqlalchemy
 streamlit
+SpeechRecognition 
+gtts
+gTTS
+streamlit
+pywin32
+text-to-speech
+mutagen
 -e .
