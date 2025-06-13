@@ -4,17 +4,15 @@ import time
 
 import speech_recognition as sr
 import streamlit as st
-from mutagen.mp3 import MP3
+from mutagen.wave import WAVE
 from phi.agent import RunResponse
-from text_to_speech import save
-
 from src.agents import agent
-from utils.voice import play_audio
+from utils.voice import save
 
 
 def play_audio(text):
-    path = os.path.join(os.getcwd(), "data/output.mp3")
-    save(text, lang="en", file=path)
+    save(text)
+    path = os.path.join(os.getcwd(), "data/output.wav")
 
     with open(path, "rb") as f:
         data = f.read()
@@ -22,7 +20,7 @@ def play_audio(text):
 
     md = f"""
         <audio autoplay>
-            <source src="data:audio/mp3;base64,{b64}" type="audio/mp3">
+            <source src="data:audio/wav;base64,{b64}" type="audio/wav">
         </audio>
     """
     st.markdown(md, unsafe_allow_html=True)
@@ -31,7 +29,7 @@ def play_audio(text):
 
 
 def get_audio_duration(file_path):
-    audio = MP3(file_path)
+    audio = WAVE(file_path)
     return audio.info.length  # in seconds (float)
 
 
@@ -102,13 +100,13 @@ if st.session_state.voice_mode:
                 try:
                     response: RunResponse = agent.run(voice_text)
                     output = response.content
-
-                except Exception as e:
-                    st.error(f"❌ Error: {str(e)}")
-                st.session_state.chat_history.append(
+                    st.session_state.chat_history.append(
                     {"role": "assistant", "content": output}
                 )
-                st.markdown(output)
-                play_audio(output)
+                    st.markdown(output)
+                    play_audio(output)
+                except Exception as e:
+                    st.error(f"❌ Error: {str(e)}")
+
 
     st.rerun()
